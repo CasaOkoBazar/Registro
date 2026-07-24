@@ -1041,8 +1041,13 @@
         const uid    = document.getElementById('UID').value;
         try {
           const res = await postAPI('guardarComprobante', {
-            uid, base64, filename: file.name, mimeType: file.type
-          });
+  uid,
+  base64,
+  filename: file.name,
+  mimeType: file.type,
+  marca: document.getElementById('rMarca').textContent.trim(),
+  lugar: document.getElementById('rLugar').textContent.trim()
+});
           if (res && res.ok) {
             status.textContent = '✓ Comprobante subido correctamente.';
             status.style.color = '#166534';
