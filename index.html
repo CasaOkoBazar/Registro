@@ -1066,10 +1066,28 @@
       reader.readAsDataURL(file);
     }
 
-    function finalizarRegistro() {
-      document.getElementById('btnFinalizar').disabled = true;
-      mostrarAlerta('¡Registro completado! En breve recibirás confirmación por correo.');
+    async function finalizarRegistro() {
+  const btnFin = document.getElementById('btnFinalizar');
+  btnFin.disabled = true;
+  btnFin.textContent = 'Enviando confirmación…';
+
+  const uid = document.getElementById('UID').value;
+  try {
+    const res = await postAPI('enviarConfirmacion', { uid });
+    if (res && res.ok) {
+      btnFin.textContent = '✓ Registro completado';
+      mostrarAlerta('¡Listo! Recibirás tu confirmación por correo en breve.');
+    } else {
+      btnFin.textContent = '✓ Finalizar registro';
+      btnFin.disabled = false;
+      mostrarAlerta('El registro se guardó pero hubo un problema enviando el correo. Intenta de nuevo.');
     }
+  } catch(err) {
+    btnFin.textContent = '✓ Finalizar registro';
+    btnFin.disabled = false;
+    mostrarAlerta('Error de conexión. Intenta de nuevo.');
+  }
+}
 
     // ══════════════════════════════════════════════════════════
     // 13. LISTENERS
