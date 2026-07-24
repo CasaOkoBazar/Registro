@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <title>Registro Casa OKO</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #f6ba0e);
+      color: #333;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .app-title {
+      display: none;
+      margin: 8px 0 16px;
+      padding: 10px 14px;
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 12px;
+      font-weight: 700;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,.04);
+    }
+    @media (pointer:coarse) {
+      .app-title { font-size: 1.1em; padding: 14px 16px; }
+    }
+
+    .contenedor {
+      width: 95%;
+      max-width: 700px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    @media (pointer: coarse) {
+      html, body { height: 100%; margin: 0; }
+      body {
+        font-size: 1.7em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+      .contenedor {
+        width: 90%;
+        max-width: none;
+        min-height: 100vh;
+        padding: 20px 8px;
+      }
+      .seccion { padding: 32px 20px; margin-bottom: 24px; }
+      label { margin-top: 16px; }
+      select, input[type="text"] { padding: 12px; margin-top: 10px; }
+      #email, #celular { font-size: 30px; padding: 14px 12px; }
+      button, .boton-grupo button { font-size: 30px; line-height: 1.2; padding: 14px 18px; }
+      #aceptar {
+        transform: scale(2);
+        transform-origin: left center;
+        margin-right: 10px;
+        accent-color: #007bff;
+        vertical-align: middle;
+      }
+      #REGLAMENTO label { font-size: 32px; display: inline-flex; align-items: center; gap: 10px; }
+    }
+
+    .seccion {
+      display: none;
+      background-color: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h2 { font-size: 1.5em; margin-bottom: 10px; }
+
+    label { display: block; margin-top: 12px; font-weight: bold; }
+
+    select, input[type="text"], input[type="email"], input[type="tel"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 1em;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 24px;
+      font-size: 1em;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+    }
+    button:disabled { background-color: gray; cursor: not-allowed; }
+
+    .boton-grupo { display: flex; justify-content: space-between; gap: 12px; }
+
+    .alerta {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #ffdddd;
+      color: #900;
+      padding: 12px 20px;
+      border: 1px solid #f5c2c7;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      z-index: 999;
+      display: none;
+    }
+
+    #resumen { margin-top: 20px; font-weight: bold; font-size: 1.2em; }
+
+    .pago-card {
+      margin: 16px 0;
+      padding: 16px;
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.04);
+    }
+    .pago-title { margin: 0 0 12px; font-weight: 700; letter-spacing: .2px; }
+    .pago-grid {
+      display: grid;
+      grid-template-columns: 160px 1fr 92px;
+      column-gap: 16px;
+      row-gap: 12px;
+      align-items: center;
+    }
+    .pago-label { font-weight: 600; color: #111827; }
+    .pago-value {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-variant-numeric: tabular-nums;
+      padding: 8px 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+    }
+    .btn-copy {
+      justify-self: end;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #007bff;
+      background: #fff;
+      color: #007bff;
+      cursor: pointer;
+      width: auto;
+      margin-top: 0;
+    }
+    .btn-copy:active { transform: translateY(1px); }
+    .pago-tip {
+      margin-top: 14px;
+      padding: 12px;
+      background: #f7fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 10px;
+      font-size: .95em;
+    }
+    @media (pointer:coarse) {
+      .pago-grid { grid-template-columns: 130px 1fr 92px; }
+      .btn-copy { padding: 10px 12px; }
+    }
+
+    .status-msg {
+      margin-top: 8px;
+      color: #555;
+      font-size: .95em;
+    }
+    .status-msg::before {
+      content: "";
+      display: inline-block;
+      width: 1em; height: 1em;
+      margin-right: .5em;
+      border: .18em solid #ccc;
+      border-top-color: #007bff;
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+      vertical-align: -.2em;
+    }
+    @keyframes spin { to { transform: rotate(1turn); } }
+
+    /* ── Comprobante ── */
+    .comp-card {
+      margin: 16px 0;
+      padding: 16px;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 12px;
+    }
+    .comp-card h3 { margin: 0 0 10px; color: #166534; }
+    #archivoComprobante { margin-top: 10px; width: 100%; }
+    #previewComprobante { margin-top: 12px; display: none; }
+    #previewComprobante img { max-width: 100%; border-radius: 8px; border: 1px solid #eee; }
+    #btnSubirComprobante { background: #16a34a; }
+    #btnSubirComprobante:disabled { background: gray; }
+    #statusComprobante { margin-top: 10px; font-size: .95em; }
+    #btnFinalizar { background: #0e7490; margin-top: 12px; }
+    #btnFinalizar:disabled { background: gray; }
+  </style>
+</head>
+
+<body>
+  <div class="contenedor">
+    <input type="hidden" id="UID" name="UID">
+    <div id="alerta" class="alerta"></div>
+    <div id="APP_TITLE" class="app-title">
+      Registro de participación en Casa OKO — <span id="APP_CAT"></span>
+    </div>
+
+    <!-- ══════════════ INICIO ══════════════ -->
+    <div id="INICIO" class="seccion" style="display:block;">
+      <h2>Bienvenido</h2>
+      <p id="introTxt">¡Hola! Este es el formulario de registro para bazar Casa OKO.</p>
+      <label>Para continuar ingresa la contraseña de un solo uso que se te brindó:</label>
+      <input type="text" id="contrasena" required>
+      <button id="btnComenzar" type="button" onclick="validarContrasena()">Comenzar</button>
+      <div id="statusComenzar" class="status-msg" aria-live="polite" style="display:none;">
+        Verificando contraseña…
+      </div>
+    </div>
+
+    <!-- ══════════════ REGLAMENTO ══════════════ -->
+    <div id="REGLAMENTO" class="seccion" style="display:none;">
+      <h2>Reglamento</h2>
+      <div id="contenidoReglamentoInicio" class="scroll-box"></div>
+      <label><input type="checkbox" id="aceptar"> He leído y acepto el reglamento</label>
+      <div class="boton-grupo">
+        <button onclick="irASeccion('REGLAMENTO','INICIO')">Regresar</button>
+        <button onclick="mostrarDATOS_PERSONALES()">Continuar</button>
+      </div>
+    </div>
+
+    <!-- ══════════════ DATOS PERSONALES ══════════════ -->
+    <div id="DATOS_PERSONALES" class="seccion">
+      <h2>Datos del Participante</h2>
+      <label>Tu nombre:</label>
+      <input type="text" id="nombre" name="nombre" required
+        pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]{3,100}"
+        title="Tu nombre debe contener solo letras y mínimo 3 caracteres">
+      <label>Nombre de tu marca:</label>
+      <input type="text" id="marca" name="marca" required
+        pattern=".{2,50}" title="Nombre de la marca debe tener mínimo 2 caracteres">
+      <label>Email:</label>
+      <input type="email" id="email" name="email" required placeholder="ejemplo@correo.com">
+      <label>Número de celular (sin espacios):</label>
+      <input type="tel" id="celular" name="celular" required
+        pattern="[0-9]{10}" title="El número de celular debe contener 10 dígitos" placeholder="10 dígitos sin espacios">
+      <label>Instagram:</label>
+      <input type="text" id="instagram" name="instagram" required
+        pattern="@[A-Za-z0-9._]{1,30}"
+        title="Debe comenzar con @ y solo contener letras, números, puntos o guiones bajos"
+        placeholder="@usuario">
+      <div class="boton-grupo">
+        <button onclick="irASeccion('DATOS_PERSONALES','REGLAMENTO')">Regresar</button>
+        <button onclick="mostrarSECCION_LUGAR()">Siguiente</button>
+      </div>
+    </div>
+
+    <!-- ══════════════ SELECCIÓN DE LUGAR ══════════════ -->
+    <div id="SECCION_LUGAR" class="seccion">
+      <h2 id="tituloLugares">Selecciona tu lugar</h2>
+
+      <label>Día:</label>
+      <select id="dia">
+        <option value="sabado">Sábado</option>
+        <option value="domingo">Domingo</option>
+        <option value="ambos">Ambos días</option>
+      </select>
+      <p id="msgNoUnDia" style="color:#900;font-style:italic;display:none;">
+        No hay lugares para asistir solo un día.
+      </p>
+
+      <label>Tamaño de mesa:</label>
+      <select id="tipoMesa">
+        <option value="chico">Chico</option>
+        <option value="grande">Grande</option>
+      </select>
+      <p id="msgNoChico" style="color:#900;font-style:italic;display:none;">Mesas chicas no disponibles.</p>
+      <p id="mensajeCompartirChico" style="color:#900;font-style:italic;display:none;">
+        Las mesas chicas no se pueden compartir.
+      </p>
+
+      <label>¿Compartirás mesa con otro hommie?</label>
+      <select id="mediaMesa">
+        <option value="no">No</option>
+        <option value="si">Sí</option>
+      </select>
+      <p id="msgSinCompartir" style="color:#900;font-style:italic;display:none;">
+        No hay mesas disponibles para compartir.
+      </p>
+      <p id="mensajeCompartirMesa" style="color:#900;font-style:italic;display:none;">
+        No se puede compartir mesa si solo asistirás un día.
+      </p>
+      <p id="mensajeCupoCompartir" style="color:#900;font-style:italic;display:none;">
+        Cupo para mesas compartidas agotado.
+      </p>
+
+      <label>Lugares disponibles:</label>
+      <select id="lugar"></select>
+
+      <div style="margin-top:15px;text-align:center;">
+        <img id="mapaImg" src="" alt="Mapa de lugares"
+          style="max-width:100%;height:auto;border:2px solid #ccc;border-radius:10px;">
+      </div>
+
+      <div id="resumen"></div>
+
+      <div class="boton-grupo">
+        <button onclick="irASeccion('SECCION_LUGAR','DATOS_PERSONALES')">Regresar</button>
+        <button id="btnReservar" type="button" onclick="enviarFormulario()">Confirmar y Reservar</button>
+      </div>
+    </div>
+
+    <!-- ══════════════ FIN ══════════════ -->
+    <div id="FIN" class="seccion">
+      <h2>¡Gracias por reservar!</h2>
+      <p>A la brevedad te mandaremos un mensaje de confirmación.</p>
+
+      <p id="saludoResumen" style="margin:6px 0 12px;">
+        Este es el resumen de tu apartado,
+        <strong id="rNombre"></strong>, para <strong id="rMarca"></strong>.
+      </p>
+
+      <div id="resumenFinal"
+        style="margin:16px 0;padding:16px;background:#fff;border:1px solid #eee;border-radius:12px;">
+        <h3 style="margin:0 0 10px;">Resumen de tu reserva</h3>
+        <div><strong>Días de asistencia:</strong> <span id="rDia"></span></div>
+        <div><strong>Tamaño de mesa:</strong> <span id="rTipo"></span></div>
+        <div><strong>Compartirás mesa:</strong> <span id="rCompartida"></span></div>
+        <div><strong>Número de mesa:</strong> <span id="rLugar"></span></div>
+        <div style="font-size:1.1em;margin-top:8px;"><strong>Total:</strong> $<span id="rPrecio"></span></div>
+      </div>
+
+      <!-- Datos bancarios -->
+      <div class="pago-card">
+        <h3 class="pago-title">Información de pago</h3>
+        <div class="pago-grid">
+          <div class="pago-label">Titular</div>
+          <div class="pago-value" id="pTitular">—</div>
+          <button class="btn-copy" onclick="copiarDesde('pTitular',this)">Copiar</button>
+
+          <div class="pago-label">Banco</div>
+          <div class="pago-value" id="pBanco">—</div>
+          <button class="btn-copy" onclick="copiarDesde('pBanco',this)">Copiar</button>
+
+          <div class="pago-label">CLABE</div>
+          <div class="pago-value" id="pClabe">—</div>
+          <button class="btn-copy" onclick="copiarDesde('pClabe',this)">Copiar</button>
+
+          <div class="pago-label">Cuenta</div>
+          <div class="pago-value" id="pCuenta">—</div>
+          <button class="btn-copy" onclick="copiarDesde('pCuenta',this)">Copiar</button>
+
+          <div class="pago-label">Tarjeta</div>
+          <div class="pago-value" id="pTarjeta">—</div>
+          <button class="btn-copy" onclick="copiarDesde('pTarjeta',this)">Copiar</button>
+        </div>
+        <div class="pago-tip">
+          <strong>Concepto: </strong>
+          <strong id="conceptoMarca">(tu marca)</strong>
+          <strong id="conceptoMesa"> (número)</strong><br>
+          <p style="color:#c62828;font-weight:600;">
+            *Por favor escribe el <em>nombre de tu marca y número de mesa</em> en el concepto
+            de la transferencia, de lo contrario no podremos ubicar tu pago fácilmente.
+          </p>
+        </div>
+      </div>
+
+      <!-- ── Subida de comprobante ── -->
+      <div class="comp-card">
+        <h3>Sube tu comprobante de pago</h3>
+        <p style="margin:4px 0 8px;">
+          Una vez realizada la transferencia, sube aquí tu comprobante
+          (imagen JPG/PNG o PDF, máx. 10 MB).
+        </p>
+        <input type="file" id="archivoComprobante" accept="image/*,.pdf">
+        <div id="previewComprobante">
+          <img id="imgPreview" alt="Vista previa del comprobante">
+        </div>
+        <button id="btnSubirComprobante" type="button"
+          onclick="subirComprobante()" disabled>
+          ↑ Subir comprobante
+        </button>
+        <div id="statusComprobante"></div>
+      </div>
+
+      <button id="btnFinalizar" type="button" onclick="finalizarRegistro()" disabled>
+        ✓ Finalizar registro
+      </button>
+
+      <h2 style="margin-top:24px;">Reglamento</h2>
+      <div id="contenidoReglamentoFin" class="scroll-box"></div>
+    </div>
+    <!-- fin FIN -->
+
+  </div><!-- fin contenedor -->
+
+  <script>
+    // ══════════════════════════════════════════════════════════
+    // 1. CONFIGURACIÓN — pega aquí la URL de tu deployment
+    // ══════════════════════════════════════════════════════════
+    const SCRIPT_URL = 'PEGA_AQUI_LA_URL_DE_TU_DEPLOYMENT';
+    // Ejemplo: 'https://script.google.com/macros/s/AKfycb.../exec'
+
+    // ══════════════════════════════════════════════════════════
+    // 2. HELPERS DE API  (reemplazan google.script.run)
+    // ══════════════════════════════════════════════════════════
+    async function callAPI(action, params = {}) {
+      const url = new URL(SCRIPT_URL);
+      url.searchParams.set('action', action);
+      Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, String(v)));
+      const res = await fetch(url.toString(), { redirect: 'follow' });
+      return res.json();
+    }
+
+    async function postAPI(action, body = {}) {
+      // Content-Type: text/plain evita el CORS preflight en Apps Script
+      const res = await fetch(SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ action, ...body }),
+        redirect: 'follow'
+      });
+      return res.json();
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // 3. ESTADO GLOBAL
+    // ══════════════════════════════════════════════════════════
+    let cargandoLugares = false;
+    let enviando        = false;
+    let precioOk        = false;
+    let reintentosPrecio = 0;
+    const MAX_REINTENTOS_PRECIO = 8;
+
+    let FECHAS_TXT = '';
+    let DIA_LABELS = { sabado: 'Sábado', domingo: 'Domingo', ambos: 'Ambos días' };
+    let DISP_CACHE = null;
+
+    let contrasenasValidas  = [];
+    let catByPass           = {};
+    let catByPrefix         = {};
+    let categoriasDisponibles = [];
+    let categoriaActual     = null;
+
+    let precioReqId = 0;
+    let precioTimer = null;
+    let ultimaCargaId = 0;
+
+    const norm = s => String(s || '')
+      .toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .trim();
+
+    // ══════════════════════════════════════════════════════════
+    // 4. HELPERS DE UI
+    // ══════════════════════════════════════════════════════════
+    function mostrarAlerta(msg) {
+      const el = document.getElementById('alerta');
+      el.textContent = msg;
+      el.style.display = 'block';
+      setTimeout(() => el.style.display = 'none', 3500);
+    }
+
+    function getCount(d, t, k) {
+      return (DISP_CACHE && DISP_CACHE[d] && DISP_CACHE[d][t] && Number(DISP_CACHE[d][t][k] || 0)) || 0;
+    }
+    function sum(...xs) { return xs.reduce((a, b) => a + Number(b || 0), 0); }
+
+    function setOptionState(selectEl, value, enabled, agotadoTxt = '— no disponible') {
+      const opt = selectEl.querySelector(`option[value="${value}"]`);
+      if (!opt) return;
+      if (!opt.dataset.base) opt.dataset.base = opt.textContent;
+      opt.disabled  = !enabled;
+      opt.textContent = enabled ? opt.dataset.base : `${opt.dataset.base} ${agotadoTxt}`;
+    }
+
+    function forceValidSelection(selectEl) {
+      if (!selectEl) return;
+      const valid = [...selectEl.options].find(o => !o.disabled);
+      if (valid && (!selectEl.value || selectEl.querySelector(`option[value="${selectEl.value}"]`)?.disabled)) {
+        selectEl.value = valid.value;
+      }
+    }
+
+    function esNumeroLugar(v) { return /^\d+$/.test(String(v || '').trim()); }
+
+    function validarLugarSeleccionado() {
+      return esNumeroLugar(document.getElementById('lugar').value);
+    }
+
+    function refrescarEstadoBoton() {
+      const btn = document.getElementById('btnReservar');
+      btn.disabled = cargandoLugares || !validarLugarSeleccionado() || !precioOk;
+    }
+
+    function resetPrecioAndCancelRetries(setMsg = true) {
+      precioReqId++;
+      if (precioTimer) { clearTimeout(precioTimer); precioTimer = null; }
+      precioOk = false;
+      reintentosPrecio = 0;
+      if (setMsg) {
+        const $res = document.getElementById('resumen');
+        if ($res) $res.textContent = 'Total: calculando…';
+      }
+      refrescarEstadoBoton();
+    }
+
+    function setTopTitle(cat) {
+      const span = document.getElementById('APP_CAT');
+      if (span) span.textContent = cat || '';
+    }
+    function showTopTitle(show) {
+      const bar = document.getElementById('APP_TITLE');
+      if (bar) bar.style.display = show ? 'block' : 'none';
+    }
+
+    function formatFechasParentesis(arr) {
+      if (!arr || !arr.length) return '';
+      if (arr.length === 1) return ` (${arr[0]})`;
+      if (arr.length === 2) return ` (${arr[0]} y ${arr[1]})`;
+      const a = arr.slice(); const last = a.pop();
+      return ` (${a.join(', ')} y ${last})`;
+    }
+
+    function setDiaLabelsFromDates(dates) {
+      const sel = document.getElementById('dia');
+      if (!sel) return;
+      const d1 = Array.isArray(dates) && dates[0] ? String(dates[0]) : '';
+      const d2 = Array.isArray(dates) && dates[1] ? String(dates[1]) : '';
+      const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+      const sab = 'sábado', dom = 'domingo';
+      const oSab = sel.querySelector('option[value="sabado"]');
+      const oDom = sel.querySelector('option[value="domingo"]');
+      const oAmb = sel.querySelector('option[value="ambos"]');
+      if (oSab) oSab.textContent = d1 ? `${cap(sab)} ${d1}` : cap(sab);
+      if (oDom) oDom.textContent = d2 ? `${cap(dom)} ${d2}` : cap(dom);
+      if (oAmb) {
+        oAmb.textContent = (d1 && d2) ? `${cap(sab)} ${d1} y ${cap(dom)} ${d2}`
+          : d1 ? `${cap(sab)} ${d1}` : d2 ? `${cap(dom)} ${d2}` : 'Ambos días';
+      }
+      DIA_LABELS = {
+        sabado:  d1 ? `${cap(sab)} ${d1}` : cap(sab),
+        domingo: d2 ? `${cap(dom)} ${d2}` : cap(dom),
+        ambos:   (d1 && d2) ? `${cap(sab)} ${d1} y ${cap(dom)} ${d2}`
+                 : d1 ? `${cap(sab)} ${d1}` : d2 ? `${cap(dom)} ${d2}` : 'Ambos días'
+      };
+    }
+
+    function copiar(txt, btn) {
+      const fallback = () => {
+        const ta = document.createElement('textarea');
+        ta.value = txt; document.body.appendChild(ta);
+        ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+      };
+      (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.resolve(fallback()))
+        .then(() => { const old = btn.textContent; btn.textContent = 'Copiado ✓'; setTimeout(() => btn.textContent = old, 1500); })
+        .catch(() => mostrarAlerta('No se pudo copiar.'));
+    }
+
+    function copiarDesde(id, btn) {
+      const el = document.getElementById(id);
+      copiar(el ? el.textContent.trim() : '', btn);
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // 5. NAVEGACIÓN ENTRE PANTALLAS
+    // ══════════════════════════════════════════════════════════
+    function mostrarREGLAMENTO() {
+      document.getElementById('INICIO').style.display     = 'none';
+      document.getElementById('REGLAMENTO').style.display = 'block';
+    }
+
+    function mostrarDATOS_PERSONALES() {
+      if (!document.getElementById('aceptar').checked) {
+        mostrarAlerta('Debes aceptar el reglamento para continuar.');
+        return;
+      }
+      document.getElementById('REGLAMENTO').style.display      = 'none';
+      document.getElementById('DATOS_PERSONALES').style.display = 'block';
+    }
+
+    function mostrarSECCION_LUGAR() {
+      const campos = ['nombre','marca','email','celular','instagram'].map(id => document.getElementById(id));
+      for (const c of campos) {
+        if (!c.checkValidity()) {
+          mostrarAlerta(c.title || 'Revisa el campo: ' + (c.previousElementSibling?.textContent || ''));
+          c.focus(); return;
+        }
+      }
+      document.getElementById('DATOS_PERSONALES').style.display = 'none';
+      document.getElementById('SECCION_LUGAR').style.display    = 'block';
+      verificarCompartirMesa();
+      syncCuposYUI();
+      resetPrecioAndCancelRetries();
+      actualizarLugares();
+      refrescarEstadoBoton();
+      showTopTitle(!!categoriaActual);
+      fetchDisponibilidadYAplicar();
+    }
+
+    function irASeccion(actual, siguiente) {
+      document.getElementById(actual).style.display   = 'none';
+      document.getElementById(siguiente).style.display = 'block';
+      showTopTitle(siguiente !== 'INICIO' && !!categoriaActual);
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // 6. LÓGICA DE CONTRASEÑA
+    // ══════════════════════════════════════════════════════════
+    async function validarContrasena() {
+      const pass = (document.getElementById('contrasena').value || '').trim();
+      if (!pass) { mostrarAlerta('Escribe tu contraseña.'); return; }
+
+      const btn    = document.getElementById('btnComenzar');
+      const input  = document.getElementById('contrasena');
+      const status = document.getElementById('statusComenzar');
+      btn.disabled = true; input.disabled = true;
+      status.textContent = 'Verificando contraseña…'; status.style.display = 'block';
+
+      try {
+        const res = await callAPI('verificarContrasena', { pass });
+        btn.disabled = false; input.disabled = false; status.style.display = 'none';
+
+        if (!res || !res.ok) { mostrarAlerta('Contraseña incorrecta. Intenta de nuevo.'); return; }
+
+        categoriaActual = res.categoria;
+        setTopTitle(categoriaActual); showTopTitle(true);
+
+        const intro = document.getElementById('introTxt');
+        if (intro) intro.innerHTML = `Formulario para <strong>${categoriaActual}</strong> — Casa OKO${FECHAS_TXT}`;
+        const h2 = document.getElementById('tituloLugares');
+        if (h2) h2.textContent = `Selecciona tu lugar — ${categoriaActual}`;
+
+        mostrarREGLAMENTO();
+        cargarReglamento('contenidoReglamentoInicio');
+        cargarReglamento('contenidoReglamentoFin');
+
+      } catch (err) {
+        btn.disabled = false; input.disabled = false; status.style.display = 'none';
+        console.error('[validarContrasena]', err);
+        mostrarAlerta('Error validando la contraseña. Inténtalo de nuevo.');
+      }
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // 7. REGLAMENTO
+    // ══════════════════════════════════════════════════════════
+    async function cargarReglamento(idContenedor) {
+      try {
+        const datos = await callAPI('getReglamento');
+        if (!Array.isArray(datos)) return;
+        const contenedor = document.getElementById(idContenedor);
+        if (!contenedor) return;
+        contenedor.innerHTML = '';
+        datos.forEach(item => {
+          const sec = document.createElement('h3'); sec.textContent = item.seccion;
+          const par = document.createElement('p');  par.innerHTML   = item.texto.replace(/\n/g, '<br>');
+          contenedor.appendChild(sec); contenedor.appendChild(par);
+        });
+      } catch (err) { console.error('[cargarReglamento]', err); }
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // 8. CONFIG (tamaños, datos bancarios, fechas, mapa)
+    // ══════════════════════════════════════════════════════════
+    function aplicarConfigListas(cfg) {
+      if (!cfg) return;
+
+      if (cfg.sizes && cfg.sizes.length) {
+        const sel = document.getElementById('tipoMesa');
+        const prev = sel.value;
+        sel.innerHTML = '';
+        cfg.sizes.forEach(s => {
+          const o = document.createElement('option');
+          o.value = s.value;
+          o.textContent = s.label + (s.dimension ? ` — ${s.dimension}` : '');
+          sel.appendChild(o);
+        });
+        if ([...sel.options].some(op => op.value === prev)) sel.value = prev;
+      }
+
+      if (cfg.bank) {
+        const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v || '—'; };
+        set('pTitular', cfg.bank.titular); set('pBanco',  cfg.bank.banco);
+        set('pClabe',   cfg.bank.clabe);   set('pCuenta', cfg.bank.cuenta);
+        set('pTarjeta', cfg.bank.tarjeta);
+      }
+
+      if (cfg.dates && cfg.dates.length) {
+        FECHAS_TXT = formatFechasParentesis(cfg.dates);
+        const intro = document.getElementById('introTxt');
+        if (intro) intro.innerHTML = `¡Hola! Este es el formulario de registro para bazar Casa OKO${FECHAS_TXT}.`;
+      }
+
+      setDiaLabelsFromDates(cfg.dates);
+
+      if (cfg.map && cfg.map.thumb) {
+        const img = document.getElementById('mapaImg');
+        if (img) img.src = cfg.map.thumb;
+      }
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // 9. DISPONIBILIDAD Y BLOQUEOS DE UI
+    // ══════════════════════════════════════════════════════════
+    async function fetchDisponibilidadYAplicar() {
+      if (!categoriaActual) return;
+      try {
+        const res = await callAPI('getDisponibles', { categoria: categoriaActual });
+        DISP_CACHE = res || null;
+        aplicarBloqueosPorCapacidad();
+      } catch (err) { console.error('[fetchDisponibilidadYAplicar]', err); }
+    }
+
+    function aplicarBloqueosPorCapacidad() {
+      const selDia  = document.getElementById('dia');
+      const selTipo = document.getElementById('tipoMesa');
+      const selComp = document.getElementById('mediaMesa');
+      const pNoUnDia = document.getElementById('msgNoUnDia');
+      const pNoChico = document.getElementById('msgNoChico');
+      const pSinComp = document.getElementById('msgSinCompartir');
+      [pNoUnDia, pNoChico, pSinComp].forEach(p => p && (p.style.display = 'none'));
+
+      const sabOK   = sum(getCount('sabado','chico','solo'),  getCount('sabado','grande','solo'))  > 0;
+      const domOK   = sum(getCount('domingo','chico','solo'), getCount('domingo','grande','solo')) > 0;
+      const ambosOK = sum(getCount('ambos','chico','solo'), getCount('ambos','grande','solo'), getCount('ambos','grande','comp')) > 0;
+
+      setOptionState(selDia, 'sabado',  sabOK);
+      setOptionState(selDia, 'domingo', domOK);
+      setOptionState(selDia, 'ambos',   ambosOK);
+      if (!sabOK && !domOK) pNoUnDia.style.display = 'block';
+      forceValidSelection(selDia);
+
+      const diaSel = selDia.value;
+      if (diaSel === 'sabado' || diaSel === 'domingo') {
+        setOptionState(selTipo, 'chico',  getCount(diaSel,'chico','solo')  > 0);
+        setOptionState(selTipo, 'grande', getCount(diaSel,'grande','solo') > 0);
+        selComp.value = 'no'; selComp.disabled = true;
+        if (getCount(diaSel,'chico','solo') === 0) pNoChico.style.display = 'block';
+      } else {
+        const chicoSoloOK  = getCount('ambos','chico','solo')  > 0;
+        const grandeSoloOK = getCount('ambos','grande','solo') > 0;
+        const grandeCompOK = getCount('ambos','grande','comp') > 0;
+        setOptionState(selTipo, 'chico',  chicoSoloOK);
+        setOptionState(selTipo, 'grande', grandeSoloOK || grandeCompOK);
+        const optSi = selComp.querySelector('option[value="si"]');
+        if (optSi) {
+          const enableSi = selTipo.value === 'grande' && grandeCompOK;
+          optSi.disabled  = !enableSi;
+          if (!optSi.dataset.base) optSi.dataset.base = optSi.textContent;
+          optSi.textContent = enableSi ? optSi.dataset.base : `${optSi.dataset.base} — no disponible`;
+          if (!enableSi && selComp.value === 'si') selComp.value = 'no';
+          selComp.disabled = selTipo.value === 'chico';
+          pSinComp.style.display = enableSi ? 'none' : 'block';
+        }
+        if (!chicoSoloOK && selTipo.value === 'chico') pNoChico.style.display = 'block';
+      }
+      forceValidSelection(selTipo);
+      forceValidSelection(selComp);
+    }
+
+    function verificarCompartirMesa() {
+      const dia   = document.getElementById('dia').value;
+      const tipo  = document.getElementById('tipoMesa').value;
+      const media = document.getElementById('mediaMesa');
+      const msgDia   = document.getElementById('mensajeCompartirMesa');
+      const msgChico = document.getElementById('mensajeCompartirChico');
+      msgDia.style.display = 'none'; msgChico.style.display = 'none';
+      let off = false;
+      if (dia !== 'ambos')  { off = true; msgDia.style.display   = 'block'; }
+      if (tipo === 'chico') { off = true; msgChico.style.display = 'block'; }
+      if (off) { media.value = 'no'; media.disabled = true; }
+      else     { media.disabled = false; }
+    }
+
+    async function syncCuposYUI() {
+      try {
+        const cupos  = await callAPI('getCupos');
+        const diaSel = document.getElementById('dia').value;
+        const mediaSel = document.getElementById('mediaMesa');
+        const msgCupo  = document.getElementById('mensajeCupoCompartir');
+        msgCupo.style.display = 'none';
+        if (diaSel !== 'ambos') { mediaSel.value = 'no'; mediaSel.disabled = true; return; }
+        const bloquear = Number(cupos.usadasCompartir) >= Number(cupos.maxCompartir)
+                      && Number(cupos.openSharedSlots) <= 0;
+        if (bloquear) { mediaSel.value = 'no'; mediaSel.disabled = true; msgCupo.style.display = 'block'; }
+        else          { mediaSel.disabled = false; }
+      } catch (err) { console.error('[syncCuposYUI]', err); }
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // 10. LUGARES Y PRECIO
+    // ══════════════════════════════════════════════════════════
+    async function actualizarLugares() {
+      const tipoMesa  = document.getElementById('tipoMesa').value;
+      const mediaMesa = document.getElementById('mediaMesa').value === 'si';
+      const dia       = document.getElementById('dia').value;
+      const lugarSelect = document.getElementById('lugar');
+
+      cargandoLugares = true;
+      const cargaId   = ++ultimaCargaId;
+      lugarSelect.disabled = true;
+      lugarSelect.innerHTML = '<option disabled selected>Cargando…</option>';
+      refrescarEstadoBoton();
+
+      if (!categoriaActual) {
+        mostrarAlerta('Falta identificar la categoría. Vuelve al inicio.');
+        cargandoLugares = false; refrescarEstadoBoton(); return;
+      }
+
+      try {
+        const lugares = await callAPI('getLugares', {
+          categoria:  categoriaActual,
+          tamano:     tipoMesa,
+          compartida: String(mediaMesa),
+          dia
+        });
+
+        if (cargaId !== ultimaCargaId) return;
+        lugarSelect.innerHTML = '';
+
+        if (!Array.isArray(lugares) || lugares.length === 0) {
+          const o = document.createElement('option');
+          o.value = ''; o.textContent = 'Sin lugares disponibles'; o.disabled = true; o.selected = true;
+          lugarSelect.appendChild(o); lugarSelect.disabled = true;
+        } else {
+          lugares.forEach(l => {
+            const o = document.createElement('option'); o.value = l; o.textContent = l;
+            lugarSelect.appendChild(o);
+          });
+          lugarSelect.value = lugares[0]; lugarSelect.disabled = false;
+        }
+
+        cargandoLugares = false;
+        actualizarResumen();
+        refrescarEstadoBoton();
+
+      } catch (err) {
+        if (cargaId !== ultimaCargaId) return;
+        lugarSelect.innerHTML = '';
+        const o = document.createElement('option');
+        o.value = ''; o.textContent = 'Error al cargar lugares'; o.disabled = true; o.selected = true;
+        lugarSelect.appendChild(o); lugarSelect.disabled = true;
+        mostrarAlerta('No pude obtener los lugares. Reintenta.');
+        cargandoLugares = false; refrescarEstadoBoton();
+      }
+    }
+
+    async function actualizarResumen(desdeReintento = false, reqId = null) {
+      const dia   = document.getElementById('dia').value;
+      const tipo  = document.getElementById('tipoMesa').value;
+      const media = document.getElementById('mediaMesa').value === 'si';
+      const $res  = document.getElementById('resumen');
+
+      if (!reqId) reqId = ++precioReqId;
+      if (!desdeReintento) {
+        reintentosPrecio = 0;
+        if (precioTimer) { clearTimeout(precioTimer); precioTimer = null; }
+      }
+      precioOk = false; $res.textContent = 'Total: calculando…'; refrescarEstadoBoton();
+
+      try {
+        const data = await callAPI('getPrecio', { dia, tipo, compartida: String(media) });
+        if (reqId !== precioReqId) return;
+
+        if (data && typeof data === 'object' && data.error) throw new Error(data.error);
+
+        const precio = Number(data);
+        precioOk = true; reintentosPrecio = 0;
+        $res.textContent = 'Total: $' + precio;
+        refrescarEstadoBoton();
+
+      } catch (err) {
+        if (reqId !== precioReqId) return;
+        const msg = (err && err.message) || '';
+
+        const esTransitorio = /cargando|Service invoked too many times|temporar/i.test(msg);
+        if (esTransitorio && reintentosPrecio < MAX_REINTENTOS_PRECIO) {
+          const base = [400,700,1100,1700,2600,4000,5500,7000][reintentosPrecio] || 7000;
+          reintentosPrecio++;
+          $res.textContent = 'Cargando precios…'; precioOk = false; refrescarEstadoBoton();
+          if (precioTimer) clearTimeout(precioTimer);
+          precioTimer = setTimeout(() => { if (reqId === precioReqId) actualizarResumen(true, reqId); }, base);
+          return;
+        }
+
+        if (/no hay precio/i.test(msg)) {
+          $res.innerHTML = 'No hay precio para esta combinación. <span style="font-weight:400">Prueba cambiando el día o el tipo de mesa.</span>';
+          precioOk = false; refrescarEstadoBoton(); return;
+        }
+
+        $res.innerHTML = 'No pudimos calcular el total. <button type="button" id="btnReintentarPrecio" style="background:none;border:0;color:#007bff;cursor:pointer;padding:0;text-decoration:underline;margin-top:0;">Reintentar</button>';
+        const b = document.getElementById('btnReintentarPrecio');
+        if (b) b.onclick = () => actualizarResumen(false);
+        precioOk = false; refrescarEstadoBoton();
+      }
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // 11. ENVÍO DEL FORMULARIO
+    // ══════════════════════════════════════════════════════════
+    function buildFormForSheet(precioFinal) {
+      return {
+        'UID':            document.getElementById('UID').value,
+        'Categoría':      categoriaActual || '(sin categoría)',
+        'Contraseña':     document.getElementById('contrasena').value.trim(),
+        'Nombre':         document.getElementById('nombre').value.trim(),
+        'Marca':          document.getElementById('marca').value.trim(),
+        'Email':          document.getElementById('email').value.trim().replace(/[.,;:]+$/, ''),
+        'Num celular':    document.getElementById('celular').value.trim(),
+        'Instagram':      document.getElementById('instagram').value.trim(),
+        'Días':           document.getElementById('dia').value,
+        'Tipo Mesa':      document.getElementById('tipoMesa').value,
+        'Mesa compartida':document.getElementById('mediaMesa').value,
+        'Num mesa':       document.getElementById('lugar').value,
+        'Precio':         String(precioFinal || '')
+      };
+    }
+
+    async function enviarFormulario() {
+      if (enviando) return;
+      enviando = true;
+
+      if (cargandoLugares) { mostrarAlerta('Espera a que se actualicen los lugares.'); enviando = false; return; }
+      if (!validarLugarSeleccionado()) { mostrarAlerta('Selecciona un lugar válido.'); enviando = false; return; }
+      if (!precioOk) { mostrarAlerta('Aún calculamos el total. Espera o pulsa "Reintentar".'); enviando = false; return; }
+
+      const boton = document.getElementById('btnReservar');
+      boton.disabled = true;
+
+      try {
+        // 1) Calcular precio en el servidor (fuente de verdad)
+        const dia      = document.getElementById('dia').value;
+        const tipoMesa = document.getElementById('tipoMesa').value;
+        const mediaMesa = document.getElementById('mediaMesa').value === 'si';
+
+        const precioData = await callAPI('getPrecio', { dia, tipo: tipoMesa, compartida: String(mediaMesa) });
+        const totalServidor = (precioData && typeof precioData === 'object' && precioData.error)
+          ? null : Number(precioData);
+        if (!totalServidor) throw new Error(precioData?.error || 'No se pudo obtener el precio');
+
+        // 2) Guardar registro
+        const formForSheet = buildFormForSheet(totalServidor);
+        const resp = await postAPI('guardarRegistro', { form: formForSheet });
+
+        if (!resp || !resp.ok) mostrarAlerta('Tu registro quedó guardado, pero revisa si recibiste correo de confirmación.');
+        else if (resp.emailStatus !== 'sent') mostrarAlerta('Registro guardado. El correo llegará en ~1 min.');
+        else mostrarAlerta('Registro guardado y correo enviado.');
+
+        // 3) Mostrar pantalla FIN
+        const nombre = document.getElementById('nombre').value.trim();
+        const marca  = document.getElementById('marca').value.trim();
+        const lugar  = document.getElementById('lugar').value;
+        const labelDia = DIA_LABELS[dia] || dia;
+        const cap    = s => s.charAt(0).toUpperCase() + s.slice(1);
+
+        document.getElementById('rNombre').textContent      = nombre;
+        document.getElementById('rMarca').textContent       = marca;
+        document.getElementById('rDia').textContent         = labelDia;
+        document.getElementById('rTipo').textContent        = cap(tipoMesa);
+        document.getElementById('rCompartida').textContent  = mediaMesa ? 'Sí' : 'No';
+        document.getElementById('rLugar').textContent       = lugar;
+        document.getElementById('rPrecio').textContent      = totalServidor;
+        document.getElementById('conceptoMarca').textContent = marca || '(tu marca)';
+        document.getElementById('conceptoMesa').textContent  = ' ' + (lugar || '(número)');
+
+        document.getElementById('SECCION_LUGAR').style.display = 'none';
+        document.getElementById('FIN').style.display           = 'block';
+
+      } catch (err) {
+        console.error('[enviarFormulario]', err);
+        mostrarAlerta('Ocurrió un error: ' + (err.message || 'Inténtalo de nuevo.'));
+      }
+
+      boton.disabled = false;
+      enviando = false;
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // 12. COMPROBANTE DE PAGO
+    // ══════════════════════════════════════════════════════════
+    document.addEventListener('DOMContentLoaded', function () {
+      const fileInput = document.getElementById('archivoComprobante');
+      if (fileInput) {
+        fileInput.addEventListener('change', function () {
+          const file   = this.files[0];
+          const btnSub = document.getElementById('btnSubirComprobante');
+          const prev   = document.getElementById('previewComprobante');
+          const img    = document.getElementById('imgPreview');
+
+          if (!file) { btnSub.disabled = true; prev.style.display = 'none'; return; }
+
+          if (file.size > 10 * 1024 * 1024) {
+            mostrarAlerta('El archivo supera 10 MB. Elige otro.');
+            this.value = ''; btnSub.disabled = true; return;
+          }
+
+          btnSub.disabled = false;
+
+          if (file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = e => { img.src = e.target.result; prev.style.display = 'block'; };
+            reader.readAsDataURL(file);
+          } else {
+            prev.style.display = 'none'; img.src = '';
+          }
+        });
+      }
+    });
+
+    async function subirComprobante() {
+      const fileInput = document.getElementById('archivoComprobante');
+      const file      = fileInput && fileInput.files[0];
+      if (!file) { mostrarAlerta('Selecciona un archivo antes de subir.'); return; }
+      if (file.size > 10 * 1024 * 1024) { mostrarAlerta('El archivo supera 10 MB.'); return; }
+
+      const btnSub = document.getElementById('btnSubirComprobante');
+      const status = document.getElementById('statusComprobante');
+      btnSub.disabled = true;
+      status.style.display = 'block'; status.style.color = '#555';
+      status.textContent = 'Subiendo comprobante… por favor espera.';
+
+      const reader = new FileReader();
+      reader.onload = async function (e) {
+        const base64 = e.target.result.split(',')[1]; // quita el prefijo data:...;base64,
+        const uid    = document.getElementById('UID').value;
+        try {
+          const res = await postAPI('guardarComprobante', {
+            uid, base64, filename: file.name, mimeType: file.type
+          });
+          if (res && res.ok) {
+            status.textContent = '✓ Comprobante subido correctamente.';
+            status.style.color = '#166534';
+            document.getElementById('btnFinalizar').disabled = false;
+          } else {
+            status.textContent = 'Error: ' + (res?.error || 'No se pudo subir. Inténtalo de nuevo.');
+            status.style.color = '#c62828';
+            btnSub.disabled = false;
+          }
+        } catch (err) {
+          status.textContent = 'Error de conexión. Inténtalo de nuevo.';
+          status.style.color = '#c62828';
+          btnSub.disabled = false;
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function finalizarRegistro() {
+      document.getElementById('btnFinalizar').disabled = true;
+      mostrarAlerta('¡Registro completado! En breve recibirás confirmación por correo.');
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // 13. LISTENERS
+    // ══════════════════════════════════════════════════════════
+    document.addEventListener('DOMContentLoaded', function () {
+      // UID único por sesión
+      const uidEl = document.getElementById('UID');
+      if (uidEl) {
+        uidEl.value = (window.crypto?.randomUUID)
+          ? window.crypto.randomUUID()
+          : Date.now() + '_' + Math.random();
+      }
+
+      // Carga configuración al arrancar
+      callAPI('getConfig').then(aplicarConfigListas).catch(err => console.error('[getConfig]', err));
+
+      // Etiquetas de días
+      callAPI('getDiasLabels').then(labels => { if (labels && !labels.error) DIA_LABELS = labels; })
+        .catch(err => console.error('[getDiasLabels]', err));
+    });
+
+    document.getElementById('dia').addEventListener('change', () => {
+      resetPrecioAndCancelRetries();
+      verificarCompartirMesa();
+      syncCuposYUI();
+      fetchDisponibilidadYAplicar();
+      actualizarLugares();
+    });
+
+    document.getElementById('tipoMesa').addEventListener('change', () => {
+      resetPrecioAndCancelRetries();
+      verificarCompartirMesa();
+      fetchDisponibilidadYAplicar();
+      actualizarLugares();
+    });
+
+    document.getElementById('mediaMesa').addEventListener('change', () => {
+      resetPrecioAndCancelRetries();
+      aplicarBloqueosPorCapacidad();
+      actualizarLugares();
+    });
+
+    document.getElementById('lugar').addEventListener('change', () => {
+      resetPrecioAndCancelRetries(false);
+      refrescarEstadoBoton();
+      actualizarResumen();
+    });
+
+    // ══════════════════════════════════════════════════════════
+    // 14. EXPONER FUNCIONES USADAS EN onclick
+    // ══════════════════════════════════════════════════════════
+    window.validarContrasena      = validarContrasena;
+    window.mostrarREGLAMENTO      = mostrarREGLAMENTO;
+    window.mostrarDATOS_PERSONALES = mostrarDATOS_PERSONALES;
+    window.mostrarSECCION_LUGAR   = mostrarSECCION_LUGAR;
+    window.irASeccion             = irASeccion;
+    window.enviarFormulario       = enviarFormulario;
+    window.copiarDesde            = copiarDesde;
+    window.subirComprobante       = subirComprobante;
+    window.finalizarRegistro      = finalizarRegistro;
+  </script>
+</body>
+</html>
