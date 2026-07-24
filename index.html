@@ -6,210 +6,294 @@
   <meta charset="UTF-8">
   <title>Registro Casa OKO</title>
   <style>
+    /* ═══════════════════════════════════════════════
+       CASA OKO — Estilos responsive
+       ═══════════════════════════════════════════════ */
+
+    *, *::before, *::after { box-sizing: border-box; }
+
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom, #f6ba0e);
+      background: linear-gradient(to bottom, #f6ba0e, #f0a800);
       color: #333;
       margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      padding: 16px 0 40px;
       min-height: 100vh;
+    }
+
+    .contenedor {
+      width: 92%;
+      max-width: 680px;
+      margin: 0 auto;
     }
 
     .app-title {
       display: none;
-      margin: 8px 0 16px;
-      padding: 10px 14px;
+      margin: 0 0 14px;
+      padding: 12px 16px;
       background: #fff;
       border: 1px solid #eee;
       border-radius: 12px;
       font-weight: 700;
+      font-size: 1em;
       text-align: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,.04);
-    }
-    @media (pointer:coarse) {
-      .app-title { font-size: 1.1em; padding: 14px 16px; }
-    }
-
-    .contenedor {
-      width: 95%;
-      max-width: 700px;
-      margin: auto;
-      padding: 20px;
-    }
-
-    @media (pointer: coarse) {
-      html, body { height: 100%; margin: 0; }
-      body {
-        font-size: 1.7em;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-      }
-      .contenedor {
-        width: 90%;
-        max-width: none;
-        min-height: 100vh;
-        padding: 20px 8px;
-      }
-      .seccion { padding: 32px 20px; margin-bottom: 24px; }
-      label { margin-top: 16px; }
-      select, input[type="text"] { padding: 12px; margin-top: 10px; }
-      #email, #celular { font-size: 30px; padding: 14px 12px; }
-      button, .boton-grupo button { font-size: 30px; line-height: 1.2; padding: 14px 18px; }
-      #aceptar {
-        transform: scale(2);
-        transform-origin: left center;
-        margin-right: 10px;
-        accent-color: #007bff;
-        vertical-align: middle;
-      }
-      #REGLAMENTO label { font-size: 32px; display: inline-flex; align-items: center; gap: 10px; }
+      box-shadow: 0 2px 6px rgba(0,0,0,.06);
     }
 
     .seccion {
       display: none;
-      background-color: white;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      background: #fff;
+      border-radius: 14px;
+      padding: 24px 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.10);
     }
 
-    h2 { font-size: 1.5em; margin-bottom: 10px; }
+    h2 { font-size: 1.35em; margin: 0 0 14px; color: #1a1a1a; }
+    h3 { font-size: 1.05em; margin: 0 0 10px; }
+    p  { line-height: 1.5; }
 
-    label { display: block; margin-top: 12px; font-weight: bold; }
+    label {
+      display: block;
+      margin-top: 14px;
+      font-weight: 600;
+      font-size: .95em;
+      color: #222;
+    }
 
-    select, input[type="text"], input[type="email"], input[type="tel"] {
+    select,
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"] {
       width: 100%;
-      padding: 10px;
+      padding: 11px 13px;
       font-size: 1em;
+      font-family: inherit;
       margin-top: 6px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      box-sizing: border-box;
+      border: 1.5px solid #d0d0d0;
+      border-radius: 9px;
+      background: #fafafa;
+      color: #222;
+      transition: border-color .2s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    select:focus,
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="tel"]:focus {
+      outline: none;
+      border-color: #f6ba0e;
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(246,186,14,.18);
     }
 
     button {
-      margin-top: 20px;
-      padding: 12px 24px;
+      margin-top: 18px;
+      padding: 13px 20px;
       font-size: 1em;
-      background-color: #007bff;
-      color: white;
+      font-family: inherit;
+      font-weight: 600;
+      background: #007bff;
+      color: #fff;
       border: none;
-      border-radius: 8px;
+      border-radius: 9px;
       cursor: pointer;
       width: 100%;
+      min-height: 46px;
+      transition: background .2s, transform .1s;
     }
-    button:disabled { background-color: gray; cursor: not-allowed; }
 
-    .boton-grupo { display: flex; justify-content: space-between; gap: 12px; }
+    button:hover:not(:disabled) { background: #0069d9; }
+    button:active:not(:disabled) { transform: translateY(1px); }
+    button:disabled { background: #adb5bd; cursor: not-allowed; }
+
+    .boton-grupo { display: flex; gap: 10px; justify-content: space-between; }
+    .boton-grupo button { flex: 1; }
 
     .alerta {
       position: fixed;
-      top: 20px;
+      top: 16px;
       left: 50%;
       transform: translateX(-50%);
-      background-color: #ffdddd;
-      color: #900;
+      background: #fff3cd;
+      color: #856404;
       padding: 12px 20px;
-      border: 1px solid #f5c2c7;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      border: 1px solid #ffc107;
+      border-radius: 9px;
+      box-shadow: 0 3px 12px rgba(0,0,0,.12);
       z-index: 999;
       display: none;
+      font-size: .95em;
+      max-width: 90%;
+      text-align: center;
     }
 
-    #resumen { margin-top: 20px; font-weight: bold; font-size: 1.2em; }
+    #resumen { margin-top: 18px; font-weight: 700; font-size: 1.15em; color: #1a1a1a; }
 
+    /* ── Pago ── */
     .pago-card {
       margin: 16px 0;
       padding: 16px;
-      background: #fff;
-      border: 1px solid #eee;
+      background: #f8f9fa;
+      border: 1px solid #e9ecef;
       border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.04);
     }
-    .pago-title { margin: 0 0 12px; font-weight: 700; letter-spacing: .2px; }
+    .pago-title { margin: 0 0 14px; font-weight: 700; font-size: 1em; }
     .pago-grid {
       display: grid;
-      grid-template-columns: 160px 1fr 92px;
-      column-gap: 16px;
-      row-gap: 12px;
+      grid-template-columns: 130px 1fr auto;
+      column-gap: 10px;
+      row-gap: 10px;
       align-items: center;
     }
-    .pago-label { font-weight: 600; color: #111827; }
+    .pago-label { font-weight: 600; font-size: .9em; color: #444; }
     .pago-value {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-variant-numeric: tabular-nums;
-      padding: 8px 12px;
-      background: #f9fafb;
-      border: 1px solid #e5e7eb;
-      border-radius: 8px;
+      font-family: ui-monospace, 'Courier New', monospace;
+      font-size: .88em;
+      padding: 8px 10px;
+      background: #fff;
+      border: 1px solid #dee2e6;
+      border-radius: 7px;
+      word-break: break-all;
     }
     .btn-copy {
-      justify-self: end;
-      padding: 8px 12px;
-      border-radius: 8px;
-      border: 1px solid #007bff;
+      padding: 7px 11px;
+      border-radius: 7px;
+      border: 1.5px solid #007bff;
       background: #fff;
       color: #007bff;
       cursor: pointer;
+      font-size: .82em;
+      font-weight: 600;
       width: auto;
+      min-height: auto;
       margin-top: 0;
+      white-space: nowrap;
     }
+    .btn-copy:hover { background: #e7f0ff; }
     .btn-copy:active { transform: translateY(1px); }
     .pago-tip {
       margin-top: 14px;
-      padding: 12px;
-      background: #f7fafc;
-      border: 1px dashed #cbd5e1;
-      border-radius: 10px;
-      font-size: .95em;
+      padding: 12px 14px;
+      background: #fff8e1;
+      border: 1px dashed #f6ba0e;
+      border-radius: 9px;
+      font-size: .88em;
+      line-height: 1.5;
     }
-    @media (pointer:coarse) {
-      .pago-grid { grid-template-columns: 130px 1fr 92px; }
-      .btn-copy { padding: 10px 12px; }
-    }
-
-    .status-msg {
-      margin-top: 8px;
-      color: #555;
-      font-size: .95em;
-    }
-    .status-msg::before {
-      content: "";
-      display: inline-block;
-      width: 1em; height: 1em;
-      margin-right: .5em;
-      border: .18em solid #ccc;
-      border-top-color: #007bff;
-      border-radius: 50%;
-      animation: spin .8s linear infinite;
-      vertical-align: -.2em;
-    }
-    @keyframes spin { to { transform: rotate(1turn); } }
 
     /* ── Comprobante ── */
     .comp-card {
       margin: 16px 0;
       padding: 16px;
       background: #f0fdf4;
-      border: 1px solid #bbf7d0;
+      border: 1.5px solid #86efac;
       border-radius: 12px;
     }
-    .comp-card h3 { margin: 0 0 10px; color: #166534; }
-    #archivoComprobante { margin-top: 10px; width: 100%; }
+    .comp-card h3 { color: #15803d; margin: 0 0 8px; }
+    #archivoComprobante {
+      margin-top: 10px;
+      width: 100%;
+      padding: 9px 12px;
+      border: 1.5px solid #86efac;
+      border-radius: 8px;
+      background: #fff;
+      font-size: .92em;
+      cursor: pointer;
+    }
     #previewComprobante { margin-top: 12px; display: none; }
-    #previewComprobante img { max-width: 100%; border-radius: 8px; border: 1px solid #eee; }
-    #btnSubirComprobante { background: #16a34a; }
-    #btnSubirComprobante:disabled { background: gray; }
-    #statusComprobante { margin-top: 10px; font-size: .95em; }
+    #previewComprobante img { max-width: 100%; border-radius: 9px; border: 1px solid #d1fae5; }
+    #btnSubirComprobante { background: #16a34a; margin-top: 12px; }
+    #btnSubirComprobante:hover:not(:disabled) { background: #15803d; }
+    #btnSubirComprobante:disabled { background: #adb5bd; }
+    #statusComprobante { margin-top: 10px; font-size: .92em; line-height: 1.4; }
     #btnFinalizar { background: #0e7490; margin-top: 12px; }
-    #btnFinalizar:disabled { background: gray; }
+    #btnFinalizar:hover:not(:disabled) { background: #0c6275; }
+    #btnFinalizar:disabled { background: #adb5bd; }
+
+    /* ── Spinner ── */
+    .status-msg {
+      margin-top: 8px;
+      color: #555;
+      font-size: .9em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .status-msg::before {
+      content: "";
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      border: 2px solid #d0d0d0;
+      border-top-color: #007bff;
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(1turn); } }
+
+    /* ── Checkbox reglamento ── */
+    #REGLAMENTO label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 500;
+      margin-top: 14px;
+      cursor: pointer;
+    }
+    #aceptar {
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      cursor: pointer;
+      accent-color: #007bff;
+    }
+
+    /* ── Mapa ── */
+    #mapaImg {
+      max-width: 100%;
+      height: auto;
+      border: 2px solid #dee2e6;
+      border-radius: 10px;
+      margin-top: 4px;
+    }
+
+    /* ── Mensajes de aviso inline ── */
+    p.aviso-rojo {
+      font-size: .88em;
+      margin: 6px 0 0;
+      padding: 6px 10px;
+      background: #fff5f5;
+      border-radius: 7px;
+      border-left: 3px solid #f87171;
+      color: #900;
+      font-style: italic;
+    }
+
+    /* ══════════════════════════════
+       RESPONSIVE — móvil
+    ══════════════════════════════ */
+    @media (max-width: 480px) {
+      body { padding: 10px 0 28px; }
+      .contenedor { width: 95%; }
+      .seccion { padding: 16px 14px; }
+      h2 { font-size: 1.15em; }
+      button { font-size: .95em; }
+
+      .pago-grid {
+        grid-template-columns: 1fr;
+        row-gap: 4px;
+      }
+      .pago-grid .pago-label { margin-top: 8px; font-size: .85em; }
+      .pago-grid .btn-copy   { margin-top: 2px; }
+    }
+
+    @media (max-width: 360px) {
+      .boton-grupo { flex-direction: column; }
+    }
   </style>
 </head>
 
@@ -313,8 +397,7 @@
       <select id="lugar"></select>
 
       <div style="margin-top:15px;text-align:center;">
-        <img id="mapaImg" src="" alt="Mapa de lugares"
-          style="max-width:100%;height:auto;border:2px solid #ccc;border-radius:10px;">
+        <img id="mapaImg" src="" alt="Mapa de lugares">
       </div>
 
       <div id="resumen"></div>
@@ -336,7 +419,7 @@
       </p>
 
       <div id="resumenFinal"
-        style="margin:16px 0;padding:16px;background:#fff;border:1px solid #eee;border-radius:12px;">
+        style="margin:16px 0;padding:16px;background:#f8f9fa;border:1px solid #e9ecef;border-radius:12px;">
         <h3 style="margin:0 0 10px;">Resumen de tu reserva</h3>
         <div><strong>Días de asistencia:</strong> <span id="rDia"></span></div>
         <div><strong>Tamaño de mesa:</strong> <span id="rTipo"></span></div>
@@ -373,7 +456,7 @@
           <strong>Concepto: </strong>
           <strong id="conceptoMarca">(tu marca)</strong>
           <strong id="conceptoMesa"> (número)</strong><br>
-          <p style="color:#c62828;font-weight:600;">
+          <p style="color:#c62828;font-weight:600;margin:6px 0 0;">
             *Por favor escribe el <em>nombre de tu marca y número de mesa</em> en el concepto
             de la transferencia, de lo contrario no podremos ubicar tu pago fácilmente.
           </p>
@@ -383,7 +466,7 @@
       <!-- ── Subida de comprobante ── -->
       <div class="comp-card">
         <h3>Sube tu comprobante de pago</h3>
-        <p style="margin:4px 0 8px;">
+        <p style="margin:4px 0 8px;font-size:.92em;">
           Una vez realizada la transferencia, sube aquí tu comprobante
           (imagen JPG/PNG o PDF, máx. 10 MB).
         </p>
@@ -405,20 +488,12 @@
       <h2 style="margin-top:24px;">Reglamento</h2>
       <div id="contenidoReglamentoFin" class="scroll-box"></div>
     </div>
-    <!-- fin FIN -->
 
   </div><!-- fin contenedor -->
 
   <script>
-    // ══════════════════════════════════════════════════════════
-    // 1. CONFIGURACIÓN — pega aquí la URL de tu deployment
-    // ══════════════════════════════════════════════════════════
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwXxYvmQnIjzdHv7Vs_W6fBlZ-9F1aGTDk58JsPY7fuJnivtGSy2Y-YTw83Hi4fwpI/exec';
-    // Ejemplo: 'https://script.google.com/macros/s/AKfycb.../exec'
 
-    // ══════════════════════════════════════════════════════════
-    // 2. HELPERS DE API  (reemplazan google.script.run)
-    // ══════════════════════════════════════════════════════════
     async function callAPI(action, params = {}) {
       const url = new URL(SCRIPT_URL);
       url.searchParams.set('action', action);
@@ -428,7 +503,6 @@
     }
 
     async function postAPI(action, body = {}) {
-      // Content-Type: text/plain evita el CORS preflight en Apps Script
       const res = await fetch(SCRIPT_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -438,9 +512,6 @@
       return res.json();
     }
 
-    // ══════════════════════════════════════════════════════════
-    // 3. ESTADO GLOBAL
-    // ══════════════════════════════════════════════════════════
     let cargandoLugares = false;
     let enviando        = false;
     let precioOk        = false;
@@ -466,9 +537,6 @@
       .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
       .trim();
 
-    // ══════════════════════════════════════════════════════════
-    // 4. HELPERS DE UI
-    // ══════════════════════════════════════════════════════════
     function mostrarAlerta(msg) {
       const el = document.getElementById('alerta');
       el.textContent = msg;
@@ -485,7 +553,7 @@
       const opt = selectEl.querySelector(`option[value="${value}"]`);
       if (!opt) return;
       if (!opt.dataset.base) opt.dataset.base = opt.textContent;
-      opt.disabled  = !enabled;
+      opt.disabled    = !enabled;
       opt.textContent = enabled ? opt.dataset.base : `${opt.dataset.base} ${agotadoTxt}`;
     }
 
@@ -498,10 +566,7 @@
     }
 
     function esNumeroLugar(v) { return /^\d+$/.test(String(v || '').trim()); }
-
-    function validarLugarSeleccionado() {
-      return esNumeroLugar(document.getElementById('lugar').value);
-    }
+    function validarLugarSeleccionado() { return esNumeroLugar(document.getElementById('lugar').value); }
 
     function refrescarEstadoBoton() {
       const btn = document.getElementById('btnReservar');
@@ -577,9 +642,6 @@
       copiar(el ? el.textContent.trim() : '', btn);
     }
 
-    // ══════════════════════════════════════════════════════════
-    // 5. NAVEGACIÓN ENTRE PANTALLAS
-    // ══════════════════════════════════════════════════════════
     function mostrarREGLAMENTO() {
       document.getElementById('INICIO').style.display     = 'none';
       document.getElementById('REGLAMENTO').style.display = 'block';
@@ -614,14 +676,11 @@
     }
 
     function irASeccion(actual, siguiente) {
-      document.getElementById(actual).style.display   = 'none';
+      document.getElementById(actual).style.display    = 'none';
       document.getElementById(siguiente).style.display = 'block';
       showTopTitle(siguiente !== 'INICIO' && !!categoriaActual);
     }
 
-    // ══════════════════════════════════════════════════════════
-    // 6. LÓGICA DE CONTRASEÑA
-    // ══════════════════════════════════════════════════════════
     async function validarContrasena() {
       const pass = (document.getElementById('contrasena').value || '').trim();
       if (!pass) { mostrarAlerta('Escribe tu contraseña.'); return; }
@@ -630,7 +689,7 @@
       const input  = document.getElementById('contrasena');
       const status = document.getElementById('statusComenzar');
       btn.disabled = true; input.disabled = true;
-      status.textContent = 'Verificando contraseña…'; status.style.display = 'block';
+      status.textContent = 'Verificando contraseña…'; status.style.display = 'flex';
 
       try {
         const res = await callAPI('verificarContrasena', { pass });
@@ -652,14 +711,10 @@
 
       } catch (err) {
         btn.disabled = false; input.disabled = false; status.style.display = 'none';
-        console.error('[validarContrasena]', err);
         mostrarAlerta('Error validando la contraseña. Inténtalo de nuevo.');
       }
     }
 
-    // ══════════════════════════════════════════════════════════
-    // 7. REGLAMENTO
-    // ══════════════════════════════════════════════════════════
     async function cargarReglamento(idContenedor) {
       try {
         const datos = await callAPI('getReglamento');
@@ -675,12 +730,8 @@
       } catch (err) { console.error('[cargarReglamento]', err); }
     }
 
-    // ══════════════════════════════════════════════════════════
-    // 8. CONFIG (tamaños, datos bancarios, fechas, mapa)
-    // ══════════════════════════════════════════════════════════
     function aplicarConfigListas(cfg) {
       if (!cfg) return;
-
       if (cfg.sizes && cfg.sizes.length) {
         const sel = document.getElementById('tipoMesa');
         const prev = sel.value;
@@ -693,31 +744,24 @@
         });
         if ([...sel.options].some(op => op.value === prev)) sel.value = prev;
       }
-
       if (cfg.bank) {
         const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v || '—'; };
         set('pTitular', cfg.bank.titular); set('pBanco',  cfg.bank.banco);
         set('pClabe',   cfg.bank.clabe);   set('pCuenta', cfg.bank.cuenta);
         set('pTarjeta', cfg.bank.tarjeta);
       }
-
       if (cfg.dates && cfg.dates.length) {
         FECHAS_TXT = formatFechasParentesis(cfg.dates);
         const intro = document.getElementById('introTxt');
         if (intro) intro.innerHTML = `¡Hola! Este es el formulario de registro para bazar Casa OKO${FECHAS_TXT}.`;
       }
-
       setDiaLabelsFromDates(cfg.dates);
-
       if (cfg.map && cfg.map.thumb) {
         const img = document.getElementById('mapaImg');
         if (img) img.src = cfg.map.thumb;
       }
     }
 
-    // ══════════════════════════════════════════════════════════
-    // 9. DISPONIBILIDAD Y BLOQUEOS DE UI
-    // ══════════════════════════════════════════════════════════
     async function fetchDisponibilidadYAplicar() {
       if (!categoriaActual) return;
       try {
@@ -728,9 +772,9 @@
     }
 
     function aplicarBloqueosPorCapacidad() {
-      const selDia  = document.getElementById('dia');
-      const selTipo = document.getElementById('tipoMesa');
-      const selComp = document.getElementById('mediaMesa');
+      const selDia   = document.getElementById('dia');
+      const selTipo  = document.getElementById('tipoMesa');
+      const selComp  = document.getElementById('mediaMesa');
       const pNoUnDia = document.getElementById('msgNoUnDia');
       const pNoChico = document.getElementById('msgNoChico');
       const pSinComp = document.getElementById('msgSinCompartir');
@@ -761,7 +805,7 @@
         const optSi = selComp.querySelector('option[value="si"]');
         if (optSi) {
           const enableSi = selTipo.value === 'grande' && grandeCompOK;
-          optSi.disabled  = !enableSi;
+          optSi.disabled    = !enableSi;
           if (!optSi.dataset.base) optSi.dataset.base = optSi.textContent;
           optSi.textContent = enableSi ? optSi.dataset.base : `${optSi.dataset.base} — no disponible`;
           if (!enableSi && selComp.value === 'si') selComp.value = 'no';
@@ -790,8 +834,8 @@
 
     async function syncCuposYUI() {
       try {
-        const cupos  = await callAPI('getCupos');
-        const diaSel = document.getElementById('dia').value;
+        const cupos    = await callAPI('getCupos');
+        const diaSel   = document.getElementById('dia').value;
         const mediaSel = document.getElementById('mediaMesa');
         const msgCupo  = document.getElementById('mensajeCupoCompartir');
         msgCupo.style.display = 'none';
@@ -803,9 +847,6 @@
       } catch (err) { console.error('[syncCuposYUI]', err); }
     }
 
-    // ══════════════════════════════════════════════════════════
-    // 10. LUGARES Y PRECIO
-    // ══════════════════════════════════════════════════════════
     async function actualizarLugares() {
       const tipoMesa  = document.getElementById('tipoMesa').value;
       const mediaMesa = document.getElementById('mediaMesa').value === 'si';
@@ -825,12 +866,9 @@
 
       try {
         const lugares = await callAPI('getLugares', {
-          categoria:  categoriaActual,
-          tamano:     tipoMesa,
-          compartida: String(mediaMesa),
-          dia
+          categoria: categoriaActual, tamano: tipoMesa,
+          compartida: String(mediaMesa), dia
         });
-
         if (cargaId !== ultimaCargaId) return;
         lugarSelect.innerHTML = '';
 
@@ -845,11 +883,7 @@
           });
           lugarSelect.value = lugares[0]; lugarSelect.disabled = false;
         }
-
-        cargandoLugares = false;
-        actualizarResumen();
-        refrescarEstadoBoton();
-
+        cargandoLugares = false; actualizarResumen(); refrescarEstadoBoton();
       } catch (err) {
         if (cargaId !== ultimaCargaId) return;
         lugarSelect.innerHTML = '';
@@ -877,18 +911,13 @@
       try {
         const data = await callAPI('getPrecio', { dia, tipo, compartida: String(media) });
         if (reqId !== precioReqId) return;
-
         if (data && typeof data === 'object' && data.error) throw new Error(data.error);
-
         const precio = Number(data);
         precioOk = true; reintentosPrecio = 0;
-        $res.textContent = 'Total: $' + precio;
-        refrescarEstadoBoton();
-
+        $res.textContent = 'Total: $' + precio; refrescarEstadoBoton();
       } catch (err) {
         if (reqId !== precioReqId) return;
         const msg = (err && err.message) || '';
-
         const esTransitorio = /cargando|Service invoked too many times|temporar/i.test(msg);
         if (esTransitorio && reintentosPrecio < MAX_REINTENTOS_PRECIO) {
           const base = [400,700,1100,1700,2600,4000,5500,7000][reintentosPrecio] || 7000;
@@ -898,44 +927,38 @@
           precioTimer = setTimeout(() => { if (reqId === precioReqId) actualizarResumen(true, reqId); }, base);
           return;
         }
-
         if (/no hay precio/i.test(msg)) {
           $res.innerHTML = 'No hay precio para esta combinación. <span style="font-weight:400">Prueba cambiando el día o el tipo de mesa.</span>';
           precioOk = false; refrescarEstadoBoton(); return;
         }
-
-        $res.innerHTML = 'No pudimos calcular el total. <button type="button" id="btnReintentarPrecio" style="background:none;border:0;color:#007bff;cursor:pointer;padding:0;text-decoration:underline;margin-top:0;">Reintentar</button>';
+        $res.innerHTML = 'No pudimos calcular el total. <button type="button" id="btnReintentarPrecio" style="background:none;border:0;color:#007bff;cursor:pointer;padding:0;text-decoration:underline;margin-top:0;width:auto;min-height:auto;">Reintentar</button>';
         const b = document.getElementById('btnReintentarPrecio');
         if (b) b.onclick = () => actualizarResumen(false);
         precioOk = false; refrescarEstadoBoton();
       }
     }
 
-    // ══════════════════════════════════════════════════════════
-    // 11. ENVÍO DEL FORMULARIO
-    // ══════════════════════════════════════════════════════════
     function buildFormForSheet(precioFinal) {
       return {
-        'UID':            document.getElementById('UID').value,
-        'Categoría':      categoriaActual || '(sin categoría)',
-        'Contraseña':     document.getElementById('contrasena').value.trim(),
-        'Nombre':         document.getElementById('nombre').value.trim(),
-        'Marca':          document.getElementById('marca').value.trim(),
-        'Email':          document.getElementById('email').value.trim().replace(/[.,;:]+$/, ''),
-        'Num celular':    document.getElementById('celular').value.trim(),
-        'Instagram':      document.getElementById('instagram').value.trim(),
-        'Días':           document.getElementById('dia').value,
-        'Tipo Mesa':      document.getElementById('tipoMesa').value,
-        'Mesa compartida':document.getElementById('mediaMesa').value,
-        'Num mesa':       document.getElementById('lugar').value,
-        'Precio':         String(precioFinal || '')
+        'UID':             document.getElementById('UID').value,
+        'Categoría':       categoriaActual || '(sin categoría)',
+        'Contraseña':      document.getElementById('contrasena').value.trim(),
+        'Nombre':          document.getElementById('nombre').value.trim(),
+        'Marca':           document.getElementById('marca').value.trim(),
+        'Email':           document.getElementById('email').value.trim().replace(/[.,;:]+$/, ''),
+        'Num celular':     document.getElementById('celular').value.trim(),
+        'Instagram':       document.getElementById('instagram').value.trim(),
+        'Días':            document.getElementById('dia').value,
+        'Tipo Mesa':       document.getElementById('tipoMesa').value,
+        'Mesa compartida': document.getElementById('mediaMesa').value,
+        'Num mesa':        document.getElementById('lugar').value,
+        'Precio':          String(precioFinal || '')
       };
     }
 
     async function enviarFormulario() {
       if (enviando) return;
       enviando = true;
-
       if (cargandoLugares) { mostrarAlerta('Espera a que se actualicen los lugares.'); enviando = false; return; }
       if (!validarLugarSeleccionado()) { mostrarAlerta('Selecciona un lugar válido.'); enviando = false; return; }
       if (!precioOk) { mostrarAlerta('Aún calculamos el total. Espera o pulsa "Reintentar".'); enviando = false; return; }
@@ -944,30 +967,26 @@
       boton.disabled = true;
 
       try {
-        // 1) Calcular precio en el servidor (fuente de verdad)
-        const dia      = document.getElementById('dia').value;
-        const tipoMesa = document.getElementById('tipoMesa').value;
+        const dia       = document.getElementById('dia').value;
+        const tipoMesa  = document.getElementById('tipoMesa').value;
         const mediaMesa = document.getElementById('mediaMesa').value === 'si';
 
-        const precioData = await callAPI('getPrecio', { dia, tipo: tipoMesa, compartida: String(mediaMesa) });
+        const precioData   = await callAPI('getPrecio', { dia, tipo: tipoMesa, compartida: String(mediaMesa) });
         const totalServidor = (precioData && typeof precioData === 'object' && precioData.error)
           ? null : Number(precioData);
         if (!totalServidor) throw new Error(precioData?.error || 'No se pudo obtener el precio');
 
-        // 2) Guardar registro
         const formForSheet = buildFormForSheet(totalServidor);
         const resp = await postAPI('guardarRegistro', { form: formForSheet });
 
-        if (!resp || !resp.ok) mostrarAlerta('Tu registro quedó guardado, pero revisa si recibiste correo de confirmación.');
-        else if (resp.emailStatus !== 'sent') mostrarAlerta('Registro guardado. El correo llegará en ~1 min.');
-        else mostrarAlerta('Registro guardado y correo enviado.');
+        if (!resp || !resp.ok) mostrarAlerta('Tu registro quedó guardado. Revisa que hayas recibido confirmación.');
+        else mostrarAlerta('Registro guardado. Por favor sube tu comprobante para finalizar.');
 
-        // 3) Mostrar pantalla FIN
-        const nombre = document.getElementById('nombre').value.trim();
-        const marca  = document.getElementById('marca').value.trim();
-        const lugar  = document.getElementById('lugar').value;
+        const nombre   = document.getElementById('nombre').value.trim();
+        const marca    = document.getElementById('marca').value.trim();
+        const lugar    = document.getElementById('lugar').value;
         const labelDia = DIA_LABELS[dia] || dia;
-        const cap    = s => s.charAt(0).toUpperCase() + s.slice(1);
+        const cap      = s => s.charAt(0).toUpperCase() + s.slice(1);
 
         document.getElementById('rNombre').textContent      = nombre;
         document.getElementById('rMarca').textContent       = marca;
@@ -981,9 +1000,7 @@
 
         document.getElementById('SECCION_LUGAR').style.display = 'none';
         document.getElementById('FIN').style.display           = 'block';
-
       } catch (err) {
-        console.error('[enviarFormulario]', err);
         mostrarAlerta('Ocurrió un error: ' + (err.message || 'Inténtalo de nuevo.'));
       }
 
@@ -991,9 +1008,6 @@
       enviando = false;
     }
 
-    // ══════════════════════════════════════════════════════════
-    // 12. COMPROBANTE DE PAGO
-    // ══════════════════════════════════════════════════════════
     document.addEventListener('DOMContentLoaded', function () {
       const fileInput = document.getElementById('archivoComprobante');
       if (fileInput) {
@@ -1002,23 +1016,17 @@
           const btnSub = document.getElementById('btnSubirComprobante');
           const prev   = document.getElementById('previewComprobante');
           const img    = document.getElementById('imgPreview');
-
           if (!file) { btnSub.disabled = true; prev.style.display = 'none'; return; }
-
           if (file.size > 10 * 1024 * 1024) {
             mostrarAlerta('El archivo supera 10 MB. Elige otro.');
             this.value = ''; btnSub.disabled = true; return;
           }
-
           btnSub.disabled = false;
-
           if (file.type.startsWith('image/')) {
             const reader = new FileReader();
             reader.onload = e => { img.src = e.target.result; prev.style.display = 'block'; };
             reader.readAsDataURL(file);
-          } else {
-            prev.style.display = 'none'; img.src = '';
-          }
+          } else { prev.style.display = 'none'; img.src = ''; }
         });
       }
     });
@@ -1037,17 +1045,14 @@
 
       const reader = new FileReader();
       reader.onload = async function (e) {
-        const base64 = e.target.result.split(',')[1]; // quita el prefijo data:...;base64,
+        const base64 = e.target.result.split(',')[1];
         const uid    = document.getElementById('UID').value;
         try {
           const res = await postAPI('guardarComprobante', {
-  uid,
-  base64,
-  filename: file.name,
-  mimeType: file.type,
-  marca: document.getElementById('rMarca').textContent.trim(),
-  lugar: document.getElementById('rLugar').textContent.trim()
-});
+            uid, base64, filename: file.name, mimeType: file.type,
+            marca: document.getElementById('rMarca').textContent.trim(),
+            lugar: document.getElementById('rLugar').textContent.trim()
+          });
           if (res && res.ok) {
             status.textContent = '✓ Comprobante subido correctamente.';
             status.style.color = '#166534';
@@ -1067,87 +1072,63 @@
     }
 
     async function finalizarRegistro() {
-  const btnFin = document.getElementById('btnFinalizar');
-  btnFin.disabled = true;
-  btnFin.textContent = 'Enviando confirmación…';
-
-  const uid = document.getElementById('UID').value;
-  try {
-    const res = await postAPI('enviarConfirmacion', { uid });
-    if (res && res.ok) {
-      btnFin.textContent = '✓ Registro completado';
-      mostrarAlerta('¡Listo! Recibirás tu confirmación por correo en breve.');
-    } else {
-      btnFin.textContent = '✓ Finalizar registro';
-      btnFin.disabled = false;
-      mostrarAlerta('El registro se guardó pero hubo un problema enviando el correo. Intenta de nuevo.');
+      const btnFin = document.getElementById('btnFinalizar');
+      btnFin.disabled = true;
+      btnFin.textContent = 'Enviando confirmación…';
+      const uid = document.getElementById('UID').value;
+      try {
+        const res = await postAPI('enviarConfirmacion', { uid });
+        if (res && res.ok) {
+          btnFin.textContent = '✓ Registro completado';
+          mostrarAlerta('¡Listo! Recibirás tu confirmación por correo en breve.');
+        } else {
+          btnFin.textContent = '✓ Finalizar registro';
+          btnFin.disabled = false;
+          mostrarAlerta('El registro se guardó pero hubo un problema enviando el correo. Intenta de nuevo.');
+        }
+      } catch(err) {
+        btnFin.textContent = '✓ Finalizar registro';
+        btnFin.disabled = false;
+        mostrarAlerta('Error de conexión. Intenta de nuevo.');
+      }
     }
-  } catch(err) {
-    btnFin.textContent = '✓ Finalizar registro';
-    btnFin.disabled = false;
-    mostrarAlerta('Error de conexión. Intenta de nuevo.');
-  }
-}
 
-    // ══════════════════════════════════════════════════════════
-    // 13. LISTENERS
-    // ══════════════════════════════════════════════════════════
     document.addEventListener('DOMContentLoaded', function () {
-      // UID único por sesión
       const uidEl = document.getElementById('UID');
       if (uidEl) {
         uidEl.value = (window.crypto?.randomUUID)
           ? window.crypto.randomUUID()
           : Date.now() + '_' + Math.random();
       }
-
-      // Carga configuración al arrancar
       callAPI('getConfig').then(aplicarConfigListas).catch(err => console.error('[getConfig]', err));
-
-      // Etiquetas de días
       callAPI('getDiasLabels').then(labels => { if (labels && !labels.error) DIA_LABELS = labels; })
         .catch(err => console.error('[getDiasLabels]', err));
     });
 
     document.getElementById('dia').addEventListener('change', () => {
-      resetPrecioAndCancelRetries();
-      verificarCompartirMesa();
-      syncCuposYUI();
-      fetchDisponibilidadYAplicar();
-      actualizarLugares();
+      resetPrecioAndCancelRetries(); verificarCompartirMesa();
+      syncCuposYUI(); fetchDisponibilidadYAplicar(); actualizarLugares();
     });
-
     document.getElementById('tipoMesa').addEventListener('change', () => {
-      resetPrecioAndCancelRetries();
-      verificarCompartirMesa();
-      fetchDisponibilidadYAplicar();
-      actualizarLugares();
+      resetPrecioAndCancelRetries(); verificarCompartirMesa();
+      fetchDisponibilidadYAplicar(); actualizarLugares();
     });
-
     document.getElementById('mediaMesa').addEventListener('change', () => {
-      resetPrecioAndCancelRetries();
-      aplicarBloqueosPorCapacidad();
-      actualizarLugares();
+      resetPrecioAndCancelRetries(); aplicarBloqueosPorCapacidad(); actualizarLugares();
     });
-
     document.getElementById('lugar').addEventListener('change', () => {
-      resetPrecioAndCancelRetries(false);
-      refrescarEstadoBoton();
-      actualizarResumen();
+      resetPrecioAndCancelRetries(false); refrescarEstadoBoton(); actualizarResumen();
     });
 
-    // ══════════════════════════════════════════════════════════
-    // 14. EXPONER FUNCIONES USADAS EN onclick
-    // ══════════════════════════════════════════════════════════
-    window.validarContrasena      = validarContrasena;
-    window.mostrarREGLAMENTO      = mostrarREGLAMENTO;
+    window.validarContrasena       = validarContrasena;
+    window.mostrarREGLAMENTO       = mostrarREGLAMENTO;
     window.mostrarDATOS_PERSONALES = mostrarDATOS_PERSONALES;
-    window.mostrarSECCION_LUGAR   = mostrarSECCION_LUGAR;
-    window.irASeccion             = irASeccion;
-    window.enviarFormulario       = enviarFormulario;
-    window.copiarDesde            = copiarDesde;
-    window.subirComprobante       = subirComprobante;
-    window.finalizarRegistro      = finalizarRegistro;
+    window.mostrarSECCION_LUGAR    = mostrarSECCION_LUGAR;
+    window.irASeccion              = irASeccion;
+    window.enviarFormulario        = enviarFormulario;
+    window.copiarDesde             = copiarDesde;
+    window.subirComprobante        = subirComprobante;
+    window.finalizarRegistro       = finalizarRegistro;
   </script>
 </body>
 </html>
